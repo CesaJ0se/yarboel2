@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Yarboel</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f5;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: #2d5016;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-container img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .brand-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            margin-left: auto;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #e8f5e9;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 450px;
+            margin: 60px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .register-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2d5016;
+            font-size: 26px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #2d5016;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #b5c5b0;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #2d5016;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #2d5016;
+            color: #ffffff;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #3e6a23;
+        }
+
+        .link p {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .link a {
+            color: #2d5016;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navegación -->
+    <nav>
+        <div class="logo-container">
+            <img src="/static/logo.png" alt="Yarboel Logo">
+            <span class="brand-name">Yarboel</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/">Inicio</a></li>
+            <li><a href="#">Productos</a></li>
+            <li><a href="/login">Inicio de sesión</a></li>
+            <li><a href="/register">Registro</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenedor formulario -->
+    <div class="register-container">
+        <h2>Crear Cuenta</h2>
+
+        <form onsubmit="registrar(event)">
+            <div class="form-group">
+                <label for="nombre">Nombre completo:</label>
+                <input type="text" id="nombre" required>
+            </div>
+
+            <div class="form-group">
+                <label for="usuario_reg">Usuario:</label>
+                <input type="text" id="usuario_reg" required>
+            </div>
+
+            <div class="form-group">
+                <label for="correo">Correo electrónico:</label>
+                <input type="email" id="correo" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password_reg">Contraseña:</label>
+                <input type="password" id="password_reg" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm">Confirmar contraseña:</label>
+                <input type="password" id="confirm" required>
+            </div>
+
+            <button type="submit" class="btn">Registrarse</button>
+        </form>
+
+        <div class="link">
+            <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión aquí</a></p>
+        </div>
+    </div>
+
+    <!-- Script Registro -->
+    <script>
+        async function registrar(e) {
+            e.preventDefault();
+
+            const pass = document.getElementById("password_reg").value;
+            const conf = document.getElementById("confirm").value;
+
+            if (pass !== conf) {
+                alert("Las contraseñas no coinciden");
+                return;
+            }
+
+            const data = {
+                nombre: document.getElementById("nombre").value,
+                usuario: document.getElementById("usuario_reg").value,
+                correo: document.getElementById("correo").value,
+                password: pass
+            };
+
+            const res = await fetch("/api/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            const json = await res.json();
+            alert(json.msg);
+
+            if (json.ok) {
+                location.href = "/login";
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yarboel - Tienda</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Arial", sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        /* ------------ NAV ------------ */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: #2d5016;
+            color: white;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-container img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .brand-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .user-name {
+            margin-left: 15px;
+            font-size: 18px;
+            color: #d2ffcc;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #e8f5e9;
+            font-size: 16px;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        /* ------------ HERO DIVIDIDO ------------ */
+        .hero-container {
+            display: flex;
+            width: 100%;
+            height: 90vh; /* hero grande */
+            padding: 30px 40px 0 40px; /* espacio desde nav y bordes */
+            gap: 40px;
+            padding: 5px;
+        }
+
+        /* ------------ CARRUSEL -------------- */
+        .carousel-container {
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 30px;
+            position: relative;
+        }
+
+        .carousel {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 30px;
+        }
+
+        /* Indicadores */
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .indicator.active {
+            background-color: white;
+        }
+
+        /* ------------ PANEL DERECHO ------------ */
+        .right-title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2d5016;
+            line-height: 1.2;
+        }
+
+        .right-subtitle {
+            font-size: 24px;
+            margin: 20px 0 30px;
+            color: #496c33;
+        }
+
+        .btn-vermas {
+            padding: 14px 28px;
+            background-color: #2d5016;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 170px;
+            transition: background 0.3s;
+        }
+
+        .btn-vermas:hover {
+            background-color: #3e6a23;
+        }
+
+        .session-link {
+    color: #ff4c4c !important;     /* Rojo fuerte */
+    font-weight: bold;
+}
+
+.session-link:hover {
+    color: #ff1f1f !important;     /* Rojo más intenso al pasar el mouse */
+}
+
+
+/* HERO SECTION - Modificado para mejor alineación y responsividad */
+.hero-container {
+  display: flex;
+  width: 100%;
+  height: 90vh; /* conserva altura */
+  padding: 30px 40px 0 40px; /* igual que antes */
+  gap: 40px;
+  box-sizing: border-box;
+}
+
+.right-panel {
+  flex: 1 1 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 600px;
+  text-align: left;
+  margin-left: auto;
+  padding: 0 20px;
+}
+
+@media (max-width: 900px) {
+  .hero-container {
+    flex-direction: column;
+    height: auto;
+  }
+  .right-panel {
+    align-items: center;
+    text-align: center;
+    padding: 20px 0;
+    max-width: 100%;
+  }
+}
+
+/* TARJETAS DE PRODUCTO */
+.productos-section {
+  padding: 40px 20px 20px;
+  background: #f0f4ec;
+  padding: -20px;
+}
+
+.productos-titulo {
+  text-align: center;
+  margin-bottom: 28px;
+  color: #2d5016;
+}
+
+.productos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  justify-content: center;
+}
+
+.product-card {
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(45, 80, 22, 0.12);
+  border-radius: 18px;
+  padding: 18px;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s;
+}
+
+.product-card img {
+  width: 80%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+
+.product-card h3 {
+  color: #2d5016;
+}
+
+.product-card button {
+  margin-top: 10px;
+  background: #2d5016;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 8px 22px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* FOOTER FUNCIONAL */
+footer {
+  background: #2d5016;
+  color: #fff;
+  padding: 36px 0 12px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+.footer-content h4 {
+  margin-bottom: 10px;
+}
+
+.footer-content p,
+.footer-content a {
+  color: #c2f7e1;
+  margin: 0 0 8px 0;
+  text-decoration: none;
+}
+
+@media (max-width: 700px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+            <span class="brand-name">Yarboel</span>
+
+            {% if session.get('user') %}
+            <span class="user-name">Hola, {{ session['user']['name'] }}</span>
+            {% endif %}
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="/">Inicio</a></li>
+            <li><a href="#productos">Productos</a></li>
+
+            {% if session.get('user') %}
+                <li><a href="/logout" class="session-link">Cerrar sesión</a></li>
+            {% else %}
+                <li><a href="/login" class="session-link">Inicio de sesión</a></li>
+<li><a href="/register" class="session-link">Registro</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero-container">
+
+        <!-- Carrusel izquierda -->
+        <div class="carousel-container">
+            <div class="carousel" id="carousel">
+                <div class="carousel-slide">
+                    <img src="{{ url_for('static', filename='carrusel5.jpg') }}" alt="">
+                </div>
+                <div class="carousel-slide">
+                    <img src="{{ url_for('static', filename='carrusel2.png') }}" alt="">
+                </div>
+                <div class="carousel-slide">
+                    <img src="{{ url_for('static', filename='carrusel3.jpeg') }}" alt="">
+                </div>
+            </div>
+
+            <div class="carousel-indicators" id="indicators">
+                <span class="indicator active" data-slide="0"></span>
+                <span class="indicator" data-slide="1"></span>
+                <span class="indicator" data-slide="2"></span>
+            </div>
+        </div>
+
+        <!-- Panel derecho -->
+         <div class="right-panel">
+    <h1 class="right-title">Busca tu árbol indicado</h1>
+    <p class="right-subtitle">Adorna tu casa como nunca</p>
+    <button class="btn-vermas">Ver más</button>
+  </div>
+</div>
+
+<!-- TARJETAS DE PRODUCTOS -->
+<section class="productos-section">
+  <h2 class="productos-titulo">Productos destacados</h2>
+  <div class="productos-grid">
+    <div class="product-card">
+      <img src="urlforstatic,filename=pino.jpg" alt="Pino">
+      <h3>Pino Natural</h3>
+      <p>Ideal para decorar tu sala con un toque clásico.</p>
+      <button>Ver producto</button>
+    </div>
+    <div class="product-card">
+      <img src="urlforstatic,filename=bonsai.jpg" alt="Bonsai">
+      <h3>Bonsai</h3>
+      <p>Elegancia en miniatura para espacios pequeños.</p>
+      <button>Ver producto</button>
+    </div>
+    <!-- Agrega más tarjetas según tus productos -->
+  </div>
+</section>
+
+<!-- FOOTER FUNCIONAL -->
+<footer>
+  <div class="footer-content">
+    <div>
+      <h4>Sobre nosotros</h4>
+      <p>Yarboel - Tu tienda favorita de árboles y decoración.</p>
+    </div>
+    <div>
+      <h4>Contacto</h4>
+      <p>Email: info@yarboel.com</p>
+      <p>Tel: +506 2222-2222</p>
+    </div>
+    <div>
+      <h4>Síguenos</h4>
+      <p>
+        <a href="#">Instagram</a> |
+        <a href="#">Facebook</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+
+
+
+    <!-- Script carrusel -->
+    <script>
+        const carousel = document.getElementById('carousel');
+        const indicators = document.querySelectorAll('.indicator');
+        let currentSlide = 0;
+        const totalSlides = 3;
+
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+            indicators.forEach((el, idx) =>
+                el.classList.toggle("active", idx === currentSlide)
+            );
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }
+
+        indicators.forEach(ind => {
+            ind.addEventListener("click", () => {
+                currentSlide = parseInt(ind.dataset.slide);
+                updateCarousel();
+            });
+        });
+
+        setInterval(nextSlide, 3000);
+    </script>
+
+</body>
+</html>
